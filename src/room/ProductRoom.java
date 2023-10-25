@@ -1,13 +1,14 @@
 package room;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 public class ProductRoom extends Room {
    private final Integer roomNumber;
-   private final LocalDateTime reservedDate;
+   private final LocalDate reservedDate;
    private boolean isReserved = false;
 
-   public ProductRoom(RoomType roomType, int cost, Integer roomNumber, LocalDateTime reservedDate) {
+   public ProductRoom(RoomType roomType, int cost, Integer roomNumber, LocalDate reservedDate) {
       super(roomType, cost);
 
       this.roomNumber = roomNumber;
@@ -18,7 +19,7 @@ public class ProductRoom extends Room {
       return roomNumber;
    }
 
-   public LocalDateTime getReservedDate() {
+   public LocalDate getReservedDate() {
       return reservedDate;
    }
 

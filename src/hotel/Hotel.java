@@ -31,4 +31,8 @@ public class Hotel {
    public Integer getAsset() {
       return asset;
    }
+
+   public void setAsset(int asset) {
+      this.asset = asset;
+   }
 }
