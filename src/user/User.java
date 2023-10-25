@@ -23,6 +23,11 @@ public class User {
    public int getPoint() {
       return point;
    }
+
+   public void setPoint(int point) {
+      this.point = point;
+   }
+
    //1. 포인트 충전 메서드
    //2. 휴대폰 번호 정규식 검사 메서드
 }
