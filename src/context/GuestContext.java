@@ -1,11 +1,11 @@
 package context;
 
-import hotel.Hotel;
+import hotel.HotelService;
 import user.User;
 
 public class GuestContext extends UtilContext {
 
-   Hotel hotel = new Hotel();
+   HotelService hotelService = new HotelService();
    public void displayGuestMode() {
       userInputHandling();
    }
@@ -23,12 +23,12 @@ public class GuestContext extends UtilContext {
    public void signIn() {
       lineWithText("JAVA 호텔 로그인");
       System.out.println("자신의 핸대폰 번호를 입력해주세요. ex)000-0000-0000");
-      String phoneNumber = sc.nextLine();
-      if (validatePhoneNumber(phoneNumber)) {
-         if (existsPhoneNumber(phoneNumber)) {
-            User user = findByPhoneNumber(phoneNumber);
+      String phoneNumber = sc.next();
+      if (hotelService.validatePhoneNumber(phoneNumber)) {
+         if (hotelService.existsPhoneNumber(phoneNumber)) {
+            User user = hotelService.findUserByPhoneNumber(phoneNumber);
             System.out.println("로그인 성공");
-            //성공
+            //성공 method
          } else {
             System.out.println("존재하지 않는 핸대폰 번호 입니다.");
             userInputHandling();
@@ -43,13 +43,13 @@ public class GuestContext extends UtilContext {
       lineWithText("JAVA 호텔 회원가입");
       System.out.println("자신의 정보를 등록해주세요.");
       System.out.print("이름: ");
-      String name = sc.nextLine();
-      System.out.print("\n핸드폰 번호: ex)000-0000-0000");
-      String phoneNumber = sc.nextLine();
-      if (validatePhoneNumber(phoneNumber)) {
-         if (!existsPhoneNumber(phoneNumber)) {
-            addUser(new User(name, phoneNumber));
-            System.out.println("** 환영합니다 **" + name+"님");
+      String name = sc.next();
+      System.out.print("\n핸드폰 번호: ex)000-0000-0000\n");
+      String phoneNumber = sc.next();
+      if (hotelService.validatePhoneNumber(phoneNumber)) {
+         if (!hotelService.existsPhoneNumber(phoneNumber)) {
+            hotelService.addUser(new User(name, phoneNumber));
+            System.out.println("** 환영합니다 **   " + name+"님");
             userInputHandling();
          } else {
             System.out.println("이미 존재하는 핸드폰 번호입니다.");
