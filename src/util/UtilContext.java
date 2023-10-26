@@ -15,4 +15,8 @@ public class UtilContext {
       line();
       System.out.println("잘못된 입력입니다. 다시 입력해주세요");
    }
+   public static void backMessage() {
+      System.out.println();
+      System.out.println("0. 뒤로 가기");
+   }
 }
