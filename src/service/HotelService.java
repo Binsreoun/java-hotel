@@ -58,6 +58,12 @@ public class HotelService {
               .toList();
    }
 
+   public List<Reservation> findReservationByName(String name) {
+      return hotel.getReservations().stream()
+              .filter(reservation -> reservation.getUserName().equals(name))
+              .toList();
+   }
+
    public List<Reservation> findReservationByPhoneNumber(String phoneNumber) {
       return hotel.getReservations().stream()
               .filter(reservation -> reservation.getUserPhoneNumber().equals(phoneNumber))
@@ -93,4 +99,28 @@ public class HotelService {
       hotel.setAsset(hotel.getAsset() + price);
    }
 
+   public int getAsset(){
+      return hotel.getAsset();
+   }
+   public List<ProductRoom> findEmptyProductRoomByDate(LocalDate date) {
+      return hotel.getProductRooms().stream()
+              .filter(room -> room.getReservedDate().equals(date))
+              .filter(empty -> !empty.isReserved())
+              .toList();
+   }
+
+   public boolean findReservationByExistingName(String name) {
+      return hotel.getReservations().stream()
+              .anyMatch(reservation-> reservation.getUserName().equals(name));
+   }
+
+   public boolean findReservationByExistingPhoneNumber(String phone) {
+      return hotel.getReservations().stream()
+              .anyMatch(reservation-> reservation.getUserPhoneNumber().equals(phone));
+   }
+
+   public boolean findReservationByExistingDate(LocalDate date) {
+      return hotel.getReservations().stream()
+              .anyMatch(reservation-> reservation.getProductRoom().getReservedDate().equals(date));
+   }
 }
