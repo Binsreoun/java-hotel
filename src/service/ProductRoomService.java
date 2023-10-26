@@ -1,4 +1,6 @@
-package room;
+package service;
+
+import model.ProductRoom;
 
 public class ProductRoomService {
 

@@ -1,4 +1,4 @@
-package user;
+package model;
 
 import static constant.UserConstant.USER_DEFAULT_POINT;
 

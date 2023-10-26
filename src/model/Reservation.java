@@ -1,6 +1,4 @@
-package reservation;
-
-import room.ProductRoom;
+package model;
 
 import java.time.LocalDateTime;
 

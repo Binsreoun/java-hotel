@@ -1,8 +1,8 @@
-import context.ApplicationContext;
+import controller.HotelController;
 
 public class HotelApplication {
    public static void main(String[] args) {
-      ApplicationContext application = new ApplicationContext();
-      application.run();
+      HotelController hotelController = new HotelController();
+      hotelController.run();
    }
 }

@@ -1,9 +1,8 @@
-package hotel;
+package model;
 
-import constant.HotelConstant;
-import reservation.Reservation;
-import room.ProductRoom;
-import user.User;
+import model.Reservation;
+import model.ProductRoom;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.List;

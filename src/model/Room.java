@@ -1,4 +1,6 @@
-package room;
+package model;
+
+import constant.RoomType;
 
 public class Room {
    private RoomType roomType;

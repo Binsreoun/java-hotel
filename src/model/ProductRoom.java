@@ -1,4 +1,6 @@
-package room;
+package model;
+
+import constant.RoomType;
 
 import java.time.LocalDate;
 

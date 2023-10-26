@@ -1,4 +1,4 @@
-package room;
+package constant;
 
 public enum RoomType {
    STANDARD("standard room"),
