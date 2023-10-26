@@ -12,7 +12,6 @@ public class ProductRoom extends Room {
 
    public ProductRoom(RoomType roomType, int cost, Integer roomNumber, LocalDate reservedDate) {
       super(roomType, cost);
-
       this.roomNumber = roomNumber;
       this.reservedDate = reservedDate;
    }
