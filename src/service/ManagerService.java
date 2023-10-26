@@ -1,44 +1,214 @@
 package service;
 
-import static util.UtilContext.lineWithText;
-import static util.UtilContext.sc;
+import model.ProductRoom;
+import model.Reservation;
+import model.User;
+
+import java.time.LocalDate;
+
+import static util.UtilContext.*;
 
 public class ManagerService {
-   private final HotelService hotelService;
+    private final HotelService hotelService;
 
-   public ManagerService(HotelService hotelService) {
-      this.hotelService = hotelService;
-   }
+    public ManagerService(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
 
-   public void displayManagerMode() {
-      managerInputHandling();
-   }
-   public void managerInputHandling(){
-      lineWithText("매니저 모드");
-      System.out.println("1. 예약 현황.");
-      System.out.println("2. 수익 현황.");
-      int command = sc.nextInt();
-      switch (command) {
-         case 1 -> reservationStatus();
-         case 2 -> assertStatus();
-         default -> managerInputHandling();
-      }
-   }
+    public void displayManagerMode() {
+        managerInputHandling();
+    }
 
-   public void reservationStatus(){
-      System.out.println("1. 빈객실 찾기.");
-      System.out.println("2. 예약 찾기.");
-      System.out.println("3. 오늘 객실 현황.");
-      int command = sc.nextInt();
-//      switch (command) {
-//         case 1 -> ;
-//         case 2 -> ;
-//         case 3 -> ;
-//         default -> managerInputHandling();
-//      }
-   }
+    public void managerInputHandling() {
+        lineWithText("매니저 모드");
+        System.out.println("1. 예약 현황.");
+        System.out.println("2. 자산 현황.");
+        //뒤로가기
+        int command = sc.nextInt();
+        switch (command) {
+            case 1 -> reservationStatus();
+            case 2 -> assertStatus();
+            //case 0 -> modeInputHandling();
+            default -> {
+                errorMessage();
+                managerInputHandling();
+            }
+        }
+    }
 
-   public void assertStatus(){
+    public void reservationStatus() {
+        System.out.println();
+        System.out.println("매뉴를 선택해 주세요.");
+        System.out.println("1. 빈객실 찾기.");
+        System.out.println("2. 예약 찾기.");
+        System.out.println("3. 오늘 객실 현황.");
+        //뒤로가기
+        int command = sc.nextInt();
+        switch (command) {
+            case 1 -> findProductRoomByDate();
+            case 2 -> findReservation();
+            case 3 -> findReservationByToday();
+            case 0 -> managerInputHandling();
+            default -> {
+                errorMessage();
+                reservationStatus();
+            }
+        }
+    }
 
-   }
+    public void findProductRoomByDate() {
+        showHotelDate();
+        int command = sc.nextInt();
+        if (command == 0) {
+            reservationStatus();
+        } else if (0 < command && command < hotelService.findAvailableDays().size()) {
+            findProductRoomIsReservedByDate(hotelService.findAvailableDays().get(command - 1));
+        } else {
+            errorMessage();
+            findProductRoomByDate();
+        }
+    }
+
+    public void findProductRoomIsReservedByDate(LocalDate day) {
+        System.out.println();
+        for (ProductRoom room : hotelService.findEmptyProductRoomByDate(day)) {
+            System.out.println(room.getRoomType());
+        }
+        //뒤로가기
+        int command = sc.nextInt();
+        if (command == 0) {
+            reservationStatus();
+        } else {
+            errorMessage();
+            findProductRoomIsReservedByDate(day);
+        }
+    }
+
+
+
+    public void findReservation() {
+        System.out.println();
+        System.out.println("어떻게 예약을 찾을까요?");
+        System.out.println("1. 이름으로 찾기.");
+        System.out.println("2. 번호로 찾기.");
+        System.out.println("3. 날짜로 찾기.");
+        //뒤로가기
+        int command = sc.nextInt();
+        switch (command) {
+            case 1 -> findReservationByExistingName();
+            case 2 -> findReservationByValidatePhoneNumber();
+            case 3 -> findReservationByDayChoice();
+            case 0 -> reservationStatus();
+            default -> {
+                errorMessage();
+                reservationStatus();
+            }
+        }
+    }
+
+    public void findReservationByExistingName() {
+        System.out.println();
+        System.out.println("이름을 입력해주세요!");
+        String command = sc.next();
+        if (hotelService.findReservationByExistingName(command)) {
+            findReservationByName(command);
+        } else {
+            System.out.println("예약 내역이 없습니다.");
+            findReservation();
+        }
+    }
+
+    public void findReservationByName(String name) {
+        for (Reservation reservation : hotelService.findReservationByName(name)) {
+            System.out.println(reservation.getProductRoom().getReservedDate() + " " + reservation.getProductRoom().getRoomType());
+        }
+        //뒤로가기
+        int command = sc.nextInt();
+        if (command == 0) {
+            reservationStatus();
+        } else {
+            errorMessage();
+            findReservationByName(name);
+        }
+    }
+
+    public void findReservationByValidatePhoneNumber() {
+        System.out.println();
+        System.out.println("번호를 입력해주세요!");
+        System.out.println("ex) 010-0000-0000");
+        String command = sc.next();
+        if (hotelService.validatePhoneNumber(command)) {
+            findReservationByExistingPhoneNumber(command);
+        } else {
+            System.out.println("\n핸드폰 번호의 입력이 올바르지 않습니다!");
+            findReservationByValidatePhoneNumber();
+        }
+    }
+
+    public void findReservationByExistingPhoneNumber(String phoneNumber) {
+        if (hotelService.findReservationByExistingPhoneNumber(phoneNumber)) {
+
+        } else {
+            System.out.println("예약된 핸드폰 번호가 없습니다!");
+            findReservation();
+        }
+    }
+
+    public void findReservationByDayChoice() {
+        showHotelDate();
+        int command = sc.nextInt();
+        //뒤로가기
+        if (command == 0) {
+            findReservation();
+        } else if (0 < command && command < hotelService.findAvailableDays().size()) {
+            findReservationByExistingDate(hotelService.findAvailableDays().get(command - 1));
+        } else {
+            errorMessage();
+            findReservation();
+        }
+    }
+
+    public void findReservationByExistingDate(LocalDate date) {
+        if (hotelService.findReservationByExistingDate(date)) {
+            findReservationByDate(date);
+        } else{
+            System.out.println("예약된 정보가 없습니다!");
+            reservationStatus();
+        }
+    }
+
+    public void findReservationByDate(LocalDate date){
+        for (Reservation reservation : hotelService.findReservationByDate(date)){
+            System.out.println(reservation.getProductRoom().getRoomType()+ "\t" + reservation.getUserName());
+        }
+        //뒤로가기
+        int command = sc.nextInt();
+        if (command == 0) {
+            reservationStatus();
+        } else {
+            errorMessage();
+            findReservation();
+        }
+    }
+
+    public void findReservationByToday() {
+        LocalDate date = LocalDate.now();
+        findReservationByExistingDate(date);
+    }
+
+    public void assertStatus() {
+        System.out.println("총 금액은 " + hotelService.getAsset() + "원 입니다.");
+        managerInputHandling();
+    }
+
+
+    private void showHotelDate() {
+        int i = 1;
+        System.out.println();
+        System.out.println("날짜를 선택해 주세요!");
+        for (LocalDate day : hotelService.findAvailableDays()) {
+            System.out.printf("%d. %10s", i++, day + "\n");
+        }
+    }
+
 }
