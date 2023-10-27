@@ -216,13 +216,13 @@ public class GuestService {
       } else {
          int idx = 1;
          for (Reservation reservation : reservations) {
-            ProductRoom productRoom = reservation.getProductRoom();
+            ProductRoom productRoom = reservation.productRoom();
             System.out.printf("%2d. %10s | %3d호 | %8s | 예약한 시간: %-15s\n",
                     idx++,
                     productRoom.getReservedDate().toString(),
                     productRoom.getRoomNumber(),
                     productRoom.getRoomType(),
-                    reservation.getCreatedAt().toString());
+                    reservation.createdAt().toString());
          }
       }
    }
@@ -267,12 +267,12 @@ public class GuestService {
    }
 
    private void cancelReservation(User user, Reservation reservation) {
-      ProductRoom productRoom = reservation.getProductRoom();
+      ProductRoom productRoom = reservation.productRoom();
       System.out.printf("%10s | %3d호 | %8s | 예약한 시간: %-15s\n",
               productRoom.getReservedDate().toString(),
               productRoom.getRoomNumber(),
               productRoom.getRoomType(),
-              reservation.getCreatedAt().toString());
+              reservation.createdAt().toString());
       System.out.println();
       System.out.println("정말 취소하시겠습니까?");
       System.out.println("1. 예약 취소       2. 뒤로 가기");

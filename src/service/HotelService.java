@@ -53,19 +53,19 @@ public class HotelService {
 
    public List<Reservation> findReservationByDate(LocalDate date) {
       return hotel.getReservations().stream()
-              .filter(reservation -> reservation.getProductRoom().getReservedDate().equals(date))
+              .filter(reservation -> reservation.productRoom().getReservedDate().equals(date))
               .toList();
    }
 
    public List<Reservation> findReservationByName(String name) {
       return hotel.getReservations().stream()
-              .filter(reservation -> reservation.getUserName().equals(name))
+              .filter(reservation -> reservation.userName().equals(name))
               .toList();
    }
 
    public List<Reservation> findReservationByPhoneNumber(String phoneNumber) {
       return hotel.getReservations().stream()
-              .filter(reservation -> reservation.getUserPhoneNumber().equals(phoneNumber))
+              .filter(reservation -> reservation.userPhoneNumber().equals(phoneNumber))
               .toList();
    }
 
@@ -111,16 +111,16 @@ public class HotelService {
 
    public boolean findReservationByExistingName(String name) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.getUserName().equals(name));
+              .anyMatch(reservation-> reservation.userName().equals(name));
    }
 
    public boolean findReservationByExistingPhoneNumber(String phone) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.getUserPhoneNumber().equals(phone));
+              .anyMatch(reservation-> reservation.userPhoneNumber().equals(phone));
    }
 
    public boolean findReservationByExistingDate(LocalDate date) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.getProductRoom().getReservedDate().equals(date));
+              .anyMatch(reservation-> reservation.productRoom().getReservedDate().equals(date));
    }
 }

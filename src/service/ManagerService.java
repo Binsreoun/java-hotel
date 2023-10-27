@@ -118,8 +118,8 @@ public class ManagerService {
 
     public void findReservationByName(String name) {
         for (Reservation reservation : hotelService.findReservationByName(name)) {
-            System.out.println(reservation.getProductRoom().getReservedDate() + "\t" + reservation.getProductRoom().getRoomType() + '\t'
-                    + reservation.getUserName() + "\t" + reservation.getUserPhoneNumber());
+            System.out.println(reservation.productRoom().getReservedDate() + "\t" + reservation.productRoom().getRoomType() + '\t'
+                    + reservation.userName() + "\t" + reservation.userPhoneNumber());
         }
         backMessage();
         int command = sc.nextInt();
@@ -155,8 +155,8 @@ public class ManagerService {
 
     public void findReservationByPhoneNumber(String phoneNumber) {
         for (Reservation reservation : hotelService.findReservationByPhoneNumber(phoneNumber)){
-            System.out.println(reservation.getProductRoom().getReservedDate() + "\t" + reservation.getProductRoom().getRoomType() + '\t'
-                    + reservation.getUserName() + "\t" + reservation.getUserPhoneNumber());
+            System.out.println(reservation.productRoom().getReservedDate() + "\t" + reservation.productRoom().getRoomType() + '\t'
+                    + reservation.userName() + "\t" + reservation.userPhoneNumber());
         }
         backMessage();
         int command = sc.nextInt();
@@ -196,7 +196,7 @@ public class ManagerService {
 
     public void findReservationByDate(LocalDate date) {
         for (Reservation reservation : hotelService.findReservationByDate(date)) {
-            System.out.println(reservation.getProductRoom().getRoomType() + "\t" + reservation.getUserName()+ "\t" + reservation.getUserPhoneNumber());
+            System.out.println(reservation.productRoom().getRoomType() + "\t" + reservation.userName()+ "\t" + reservation.userPhoneNumber());
         }
         backMessage();
         int command = sc.nextInt();
