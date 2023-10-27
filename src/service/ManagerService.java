@@ -161,7 +161,7 @@ public class ManagerService {
         backMessage();
         int command = sc.nextInt();
         if (command == 0) {
-            findReservationByValidatePhoneNumber();
+            findReservation();
         } else {
             errorMessage();
             findReservation();
