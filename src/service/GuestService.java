@@ -18,6 +18,7 @@ public class GuestService {
    private final HotelService hotelService;
    private final UserService userService = new UserService();
    private final ProductRoomService productRoomService = new ProductRoomService();
+
    public GuestService(HotelService hotelService) {
       this.hotelService = hotelService;
    }
@@ -88,7 +89,8 @@ public class GuestService {
       System.out.println("3. 포인트 충전하기");
       System.out.println("4. 포인트 조회하기");
       System.out.println("5. 예약 취소하기");
-      System.out.println("6. 로그아웃");
+      //System.out.println("6. 포인트 환전하기");
+      System.out.println("7. 로그아웃");
       serviceInputHandling(user);
    }
 
@@ -100,14 +102,14 @@ public class GuestService {
          case 3 -> chargePoint(user);
          case 4 -> getUserPoint(user);
          case 5 -> showReservation(user);
-         case 6 -> logout();
+         case 6 -> exchangePoint(user);
+         case 7 -> logout();
          default -> {
             errorMessage();
             displayUserService(user);
          }
       }
    }
-
 
    private void showAvailableDays(User user) {
       List<LocalDate> availableDays = hotelService.findAvailableDays();
@@ -194,7 +196,6 @@ public class GuestService {
       int roomCost = productRoom.getCost();
       hotelService.addReservation(reservation);
       userService.deductPoint(user, roomCost);
-      hotelService.addAsset(roomCost);
       productRoomService.changeReservationState(productRoom, true);
       System.out.println("예약이 완료되었습니다.");
       displayUserService(user);
@@ -230,6 +231,7 @@ public class GuestService {
       System.out.println("충전할 포인트를 입력해주세요.");
       int point = sc.nextInt();
       userService.chargePoint(user, point);
+      hotelService.addAsset(point);
       line();
       System.out.println("충전이 완료 되었습니다.");
       System.out.println(user.getName() + "님 현재 잔액: " + user.getPoint() + " ₩");
@@ -279,11 +281,27 @@ public class GuestService {
          int roomCost = productRoom.getCost();
          hotelService.cancelReservation(reservation);
          userService.chargePoint(user, roomCost);
-         hotelService.deductAsset(roomCost);
          productRoomService.changeReservationState(productRoom, false);
          System.out.println("예약이 취소 되었습니다.");
       }
       displayUserService(user);
+   }
+
+   private void exchangePoint(User user) {
+      String userName = user.getName();
+      int point = user.getPoint();
+      System.out.println(userName + "님의 현재 포인트: " + point + " ₩ 입니다.");
+      System.out.println();
+      System.out.println("환전할 금액을 입력해주세요.");
+      int money = sc.nextInt();
+      if (money > point) {
+         System.out.println("최대 환전 금액은 " + point + " ₩ 입니다.");
+         exchangePoint(user);
+      } else {
+         System.out.println("환전되었습니다.");
+         hotelService.deductAsset(money);
+         displayUserService(user);
+      }
    }
 
    private void logout() {
