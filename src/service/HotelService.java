@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class HotelService {
    Hotel hotel = new Hotel();
-
    private static HotelService hotelService;
 
    public static HotelService getHotelService() {
@@ -49,12 +48,12 @@ public class HotelService {
    public User findUserByPhoneNumber(String phoneNumber) {
       return hotel.getUsers().stream()
               .filter(u -> u.getPhoneNumber().equals(phoneNumber))
-              .findFirst().get();
+              .findFirst().orElse(null);
    }
 
    public List<Reservation> findReservationByDate(LocalDate date) {
       return hotel.getReservations().stream()
-              .filter(reservation -> reservation.getCreatedAt().equals(date))
+              .filter(reservation -> reservation.getProductRoom().getReservedDate().equals(date))
               .toList();
    }
 
@@ -72,18 +71,15 @@ public class HotelService {
 
    public void addReservation(Reservation reservation) {
       hotel.getReservations().add(reservation);
+
    }
 
-   public void delReservation(Reservation reservation) {
+   public void cancelReservation(Reservation reservation) {
       hotel.getReservations().remove(reservation);
    }
 
    public void addUser(User user) {
       hotel.getUsers().add(user);
-   }
-
-   public void delUser(User user) {
-      hotel.getUsers().remove(user);
    }
 
    public boolean validatePhoneNumber(String phoneNumber) {
@@ -97,6 +93,10 @@ public class HotelService {
 
    public void addAsset(int price) {
       hotel.setAsset(hotel.getAsset() + price);
+   }
+
+   public void deductAsset(int price) {
+      hotel.setAsset(hotel.getAsset() - price);
    }
 
    public int getAsset(){
