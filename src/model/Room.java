@@ -3,8 +3,8 @@ package model;
 import constant.RoomType;
 
 public class Room {
-   private RoomType roomType;
-   private int cost;
+   private final RoomType roomType;
+   private final int cost;
 
    public Room(RoomType roomType, int cost) {
       this.roomType = roomType;

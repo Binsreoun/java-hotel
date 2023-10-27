@@ -3,10 +3,10 @@ package model;
 import java.time.LocalDateTime;
 
 public class Reservation {
-   private ProductRoom productRoom;
-   private String userName;
-   private String userPhoneNumber;
-   private LocalDateTime createdAt;
+   private final ProductRoom productRoom;
+   private final String userName;
+   private final String userPhoneNumber;
+   private final LocalDateTime createdAt;
 
    public Reservation(ProductRoom productRoom, String userName, String userPhoneNumber, LocalDateTime createdAt) {
       this.productRoom = productRoom;

@@ -3,8 +3,8 @@ package model;
 import static constant.UserConstant.USER_DEFAULT_POINT;
 
 public class User {
-   private String name;
-   private String phoneNumber;
+   private final String name;
+   private final String phoneNumber;
    private int point = USER_DEFAULT_POINT;
 
    public User(String name, String phoneNumber) {
@@ -28,6 +28,4 @@ public class User {
       this.point = point;
    }
 
-   //1. 포인트 충전 메서드
-   //2. 휴대폰 번호 정규식 검사 메서드
 }
