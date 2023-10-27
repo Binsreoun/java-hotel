@@ -31,7 +31,10 @@ public class HotelController {
       System.out.println("2. Manager Mode");
       int command = sc.nextInt();
       switch (command) {
-         case 1 -> guestService.displayGuestMode();
+         case 1 -> {
+            guestService.displayGuestMode();
+            modeInputHandling();
+         }
          case 2 -> managerService.displayManagerMode();
          default -> {
             errorMessage();

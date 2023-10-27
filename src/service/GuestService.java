@@ -27,12 +27,18 @@ public class GuestService {
       System.out.println("1. 이미 가입한 회원입니다.");
       System.out.println("2. 처음 방문한 회원입니다.");
       backMessage();
-      int command = sc.nextInt();
-      switch (command) {
-//         case 0 ->
-         case 1 -> signIn();
-         case 2 -> signUp();
-         default -> displayGuestMode();
+      while(true) {
+         int command = sc.nextInt();
+         if (command == 0) {
+            break;
+         } else if (command == 1) {
+            signIn();;
+         } else if (command == 2) {
+            signUp();
+         } else {
+            errorMessage();
+            displayGuestMode();
+         }
       }
    }
 
