@@ -1,9 +1,5 @@
 package model;
 
-import model.Reservation;
-import model.ProductRoom;
-import model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

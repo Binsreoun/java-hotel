@@ -99,9 +99,10 @@ public class HotelService {
       hotel.setAsset(hotel.getAsset() - price);
    }
 
-   public int getAsset(){
+   public int getAsset() {
       return hotel.getAsset();
    }
+
    public List<ProductRoom> findEmptyProductRoomByDate(LocalDate date) {
       return hotel.getProductRooms().stream()
               .filter(room -> room.getReservedDate().equals(date))
@@ -111,16 +112,16 @@ public class HotelService {
 
    public boolean findReservationByExistingName(String name) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.userName().equals(name));
+              .anyMatch(reservation -> reservation.userName().equals(name));
    }
 
    public boolean findReservationByExistingPhoneNumber(String phone) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.userPhoneNumber().equals(phone));
+              .anyMatch(reservation -> reservation.userPhoneNumber().equals(phone));
    }
 
    public boolean findReservationByExistingDate(LocalDate date) {
       return hotel.getReservations().stream()
-              .anyMatch(reservation-> reservation.productRoom().getReservedDate().equals(date));
+              .anyMatch(reservation -> reservation.productRoom().getReservedDate().equals(date));
    }
 }

@@ -7,10 +7,8 @@ public enum RoomType {
    SUITE("suite room");
 
    final String name;
+
    RoomType(String name) {
       this.name = name;
-   }
-   public String getName() {
-      return name;
    }
 }
