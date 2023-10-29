@@ -167,17 +167,17 @@ public class GuestService {
    private void selectRoom(User user, ProductRoom productRoom) {
       if (productRoom.getCost() <= user.getPoint()) {
          line();
-         System.out.printf("%6d호 | %-8s | %-6d\n",
+         System.out.printf("%-4d호 | %-8s | %-6d\n",
                  productRoom.getRoomNumber(),
                  productRoom.getRoomType(),
                  productRoom.getCost());
-         System.out.println("예약을 하시겠습니까?");
+         System.out.println("예약 하시겠습니까?");
          System.out.println();
          System.out.println("1. 확인         2. 취소");
          int command = sc.nextInt();
          switch (command) {
             case 1 -> reservationHotel(user, productRoom);
-            case 2 -> selectRoom(user, productRoom);
+            case 2 -> displayUserService(user);
             default -> {
                errorMessage();
                selectRoom(user, productRoom);
@@ -213,6 +213,7 @@ public class GuestService {
       List<Reservation> reservations = hotelService.findReservationByPhoneNumber(userPhoneNumber);
       line();
       showReservationHandling(reservations);
+      System.out.println();
       System.out.println("메인 화면으로 돌아갑니다.");
       displayUserService(user);
    }
