@@ -35,7 +35,10 @@ public class HotelController {
             guestService.displayGuestMode();
             modeInputHandling();
          }
-         case 2 -> managerService.displayManagerMode();
+         case 2 -> {
+            managerService.displayManagerMode();
+            modeInputHandling();
+         }
          default -> {
             errorMessage();
             modeInputHandling();
