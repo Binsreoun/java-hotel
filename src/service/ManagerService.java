@@ -16,9 +16,9 @@ public class ManagerService {
 
    public void displayManagerMode() {
       while (true) {
-         lineWithText("매니저 모드");
-         System.out.println("1. 예약 현황.");
-         System.out.println("2. 자산 현황.");
+         lineWithText("Manger Mode");
+         System.out.println("1. 예약 현황");
+         System.out.println("2. 자산 현황");
          backMessage();
          int command = sc.nextInt();
          if (command == 0) {
