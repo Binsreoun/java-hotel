@@ -311,6 +311,7 @@ public class GuestService {
       } else {
          System.out.println("환전이 완료되었습니다.");
          hotelService.deductAsset(money);
+         userService.deductPoint(user, money);
          displayUserService(user);
       }
    }
