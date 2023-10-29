@@ -25,9 +25,9 @@ public class GuestService {
 
    public void displayGuestMode() {
       while (true) {
-         lineWithText("회원 모드");
-         System.out.println("1. 이미 가입한 회원입니다.");
-         System.out.println("2. 처음 방문한 회원입니다.");
+         lineWithText("Guest Mode");
+         System.out.println("1. 로그인");
+         System.out.println("2. 회원 가입");
          backMessage();
          int command = sc.nextInt();
          if (command == 0) {
@@ -44,33 +44,37 @@ public class GuestService {
 
    private void signIn() {
       lineWithText("JAVA 호텔 로그인");
-      System.out.println("ex)000-0000-0000");
-      System.out.println("자신의 핸대폰 번호를 입력해주세요.");
+      phoneNumberContext();
       String phoneNumber = sc.next();
       if (hotelService.validatePhoneNumber(phoneNumber)) {
          if (hotelService.existsPhoneNumber(phoneNumber)) {
             User user = hotelService.findUserByPhoneNumber(phoneNumber);
             displayUserService(user);
          } else {
-            System.out.println("존재하지 않는 핸대폰 번호 입니다.");
+            System.out.println("존재하지 않는 핸드폰 번호 입니다.");
          }
       } else {
          System.out.println("\n핸드폰 번호의 입력이 올바르지 않습니다!");
       }
    }
 
+   private static void phoneNumberContext() {
+      System.out.println("ex)000-0000-0000");
+      System.out.println("자신의 핸드폰 번호를 입력해주세요.");
+      System.out.print("핸드폰 번호: ");
+   }
+
    private void signUp() {
-      lineWithText("JAVA 호텔 회원가입");
+      lineWithText("JAVA 호텔 회원 가입");
       System.out.println("자신의 정보를 등록해주세요.");
       System.out.print("이름: ");
       String name = sc.next();
-      System.out.println("\nex)000-0000-0000");
-      System.out.println("자신의 핸드폰 번호를 입력해주세요.");
+      phoneNumberContext();
       String phoneNumber = sc.next();
       if (hotelService.validatePhoneNumber(phoneNumber)) {
          if (!hotelService.existsPhoneNumber(phoneNumber)) {
             hotelService.addUser(new User(name, phoneNumber));
-            System.out.println("\n** 환영합니다 **   " + name + "님");
+            System.out.println("\n회원 가입이 완료되었습니다.");
          } else {
             System.out.println("\n이미 존재하는 핸드폰 번호입니다.");
             signUp();
@@ -82,19 +86,22 @@ public class GuestService {
    }
 
    private void displayUserService(User user) {
+      System.out.println();
       System.out.println("반갑습니다. " + user.getName() + "님~");
-      line();
+      lineWithText("회원 모드");
       System.out.println("1. 호텔 예약하기");
       System.out.println("2. 예약한 호텔 조회하기");
       System.out.println("3. 포인트 충전하기");
       System.out.println("4. 포인트 조회하기");
       System.out.println("5. 예약 취소하기");
-      //System.out.println("6. 포인트 환전하기");
+      System.out.println("6. 포인트 환전하기");
       System.out.println("7. 로그아웃");
       serviceInputHandling(user);
    }
 
    private void serviceInputHandling(User user) {
+      System.out.println();
+      System.out.print("입력: ");
       int command = sc.nextInt();
       switch (command) {
          case 1 -> showAvailableDays(user);
@@ -182,7 +189,7 @@ public class GuestService {
          int command = sc.nextInt();
          switch (command) {
             case 1 -> chargePoint(user);
-            case 2 -> selectRoom(user, productRoom);
+            case 2 -> displayUserService(user);
             default -> {
                errorMessage();
                selectRoom(user, productRoom);
@@ -210,21 +217,22 @@ public class GuestService {
       displayUserService(user);
    }
 
-   private static void showReservationHandling(List<Reservation> reservations) {
+   private static boolean showReservationHandling(List<Reservation> reservations) {
       if (reservations.size() == 0) {
          System.out.println("조회 가능한 예약이 없습니다.");
-      } else {
-         int idx = 1;
-         for (Reservation reservation : reservations) {
-            ProductRoom productRoom = reservation.productRoom();
-            System.out.printf("%2d. %10s | %3d호 | %8s | 예약한 시간: %-15s\n",
-                    idx++,
-                    productRoom.getReservedDate().toString(),
-                    productRoom.getRoomNumber(),
-                    productRoom.getRoomType(),
-                    reservation.createdAt().toString());
-         }
+         return false;
       }
+      int idx = 1;
+      for (Reservation reservation : reservations) {
+         ProductRoom productRoom = reservation.productRoom();
+         System.out.printf("%2d. %10s | %3d호 | %8s | 예약한 시간: %-15s\n",
+                 idx++,
+                 productRoom.getReservedDate().toString(),
+                 productRoom.getRoomNumber(),
+                 productRoom.getRoomType(),
+                 reservation.createdAt().toString());
+      }
+      return true;
    }
 
    private void chargePoint(User user) {
@@ -258,11 +266,12 @@ public class GuestService {
       String userPhoneNumber = user.getPhoneNumber();
       List<Reservation> reservations = hotelService.findReservationByPhoneNumber(userPhoneNumber);
       line();
-      showReservationHandling(reservations);
-      int command = sc.nextInt();
-      if (command >= 1 && command <= reservations.size()) {
-         Reservation reservation = reservations.get(command - 1);
-         cancelReservation(user, reservation);
+      if (showReservationHandling(reservations) ) {
+         int command = sc.nextInt();
+         if (command >= 1 && command <= reservations.size()) {
+            Reservation reservation = reservations.get(command - 1);
+            cancelReservation(user, reservation);
+         }
       }
    }
 
@@ -298,7 +307,7 @@ public class GuestService {
          System.out.println("최대 환전 금액은 " + point + " ₩ 입니다.");
          exchangePoint(user);
       } else {
-         System.out.println("환전되었습니다.");
+         System.out.println("환전이 완료되었습니다.");
          hotelService.deductAsset(money);
          displayUserService(user);
       }
