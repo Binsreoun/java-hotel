@@ -266,12 +266,14 @@ public class GuestService {
       String userPhoneNumber = user.getPhoneNumber();
       List<Reservation> reservations = hotelService.findReservationByPhoneNumber(userPhoneNumber);
       line();
-      if (showReservationHandling(reservations) ) {
+      if (showReservationHandling(reservations)) {
          int command = sc.nextInt();
          if (command >= 1 && command <= reservations.size()) {
             Reservation reservation = reservations.get(command - 1);
             cancelReservation(user, reservation);
          }
+      } else {
+         displayUserService(user);
       }
    }
 
