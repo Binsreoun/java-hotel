@@ -11,7 +11,6 @@ public class Hotel {
    private final List<Reservation> reservations = new ArrayList<>();
    private final List<User> users = new ArrayList<>();
    private int asset = HOTEL_ASSET;
-   private final String password = PASSWORD;
 
    public List<ProductRoom> getProductRooms() {
       return productRooms;
@@ -30,7 +29,7 @@ public class Hotel {
    }
 
    public String getPassword() {
-      return password;
+      return PASSWORD;
    }
 
    public void setAsset(int asset) {
