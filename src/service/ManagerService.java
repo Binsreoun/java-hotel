@@ -36,9 +36,9 @@ public class ManagerService {
    public void reservationStatus() {
       System.out.println();
       System.out.println("매뉴를 선택해 주세요.");
-      System.out.println("1. 빈객실 찾기.");
-      System.out.println("2. 예약 찾기.");
-      System.out.println("3. 오늘 객실 현황.");
+      System.out.println("1. 빈객실 찾기");
+      System.out.println("2. 예약 찾기");
+      System.out.println("3. 오늘 객실 현황");
       backMessage();
       int command = sc.nextInt();
       switch (command) {
@@ -86,9 +86,9 @@ public class ManagerService {
    public void findReservation() {
       System.out.println();
       System.out.println("방법을 선택해 주세요!");
-      System.out.println("1. 이름 으로 찾기.");
-      System.out.println("2. 번호로 찾기.");
-      System.out.println("3. 날짜로 찾기.");
+      System.out.println("1. 이름으로 찾기");
+      System.out.println("2. 번호로 찾기");
+      System.out.println("3. 날짜로 찾기");
       backMessage();
       int command = sc.nextInt();
       switch (command) {
@@ -183,7 +183,7 @@ public class ManagerService {
 
    public void findReservationByExistingDate(LocalDate date) {
       System.out.println();
-      System.out.println("선택하신 날짜는 " + date + " 입니다");
+      System.out.println("선택하신 날짜는 " + date + " 입니다.");
       if (hotelService.findReservationByExistingDate(date)) {
          findReservationByDate(date);
       } else {
