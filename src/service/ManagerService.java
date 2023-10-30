@@ -19,6 +19,7 @@ public class ManagerService {
          lineWithText("Manger Mode");
          System.out.println("1. 예약 현황");
          System.out.println("2. 자산 현황");
+         System.out.println("9. 시스템 종료");
          backMessage();
          int command = sc.nextInt();
          if (command == 0) {
@@ -27,6 +28,8 @@ public class ManagerService {
             reservationStatus();
          } else if (command == 2) {
             assertStatus();
+         } else if (command == 9) {
+            System.exit(0);
          } else {
             errorMessage();
          }
