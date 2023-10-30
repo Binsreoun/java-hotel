@@ -156,8 +156,9 @@ public class GuestService {
          if (productRoom.isReserved()) {
             System.out.println("이미 예약된 방입니다.");
             showAvailableRoom(command, availableDays, user);
+         } else {
+            selectRoom(user, productRoom);
          }
-         selectRoom(user, productRoom);
       } else {
          errorMessage();
          showAvailableRoom(command, availableDays, user);
@@ -180,7 +181,7 @@ public class GuestService {
             case 2 -> displayUserService(user);
             default -> {
                errorMessage();
-               selectRoom(user, productRoom);
+               displayUserService(user);
             }
          }
       } else {
@@ -192,7 +193,7 @@ public class GuestService {
             case 2 -> displayUserService(user);
             default -> {
                errorMessage();
-               selectRoom(user, productRoom);
+               displayUserService(user);
             }
          }
       }
