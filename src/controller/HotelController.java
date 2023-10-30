@@ -4,6 +4,9 @@ import service.GuestService;
 import service.HotelService;
 import service.ManagerService;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import static service.HotelService.getHotelService;
 import static util.UtilContext.errorMessage;
 import static util.UtilContext.sc;
@@ -36,13 +39,47 @@ public class HotelController {
             modeInputHandling();
          }
          case 2 -> {
-            managerService.displayManagerMode();
-            modeInputHandling();
+            if (passwordCheck()) {
+               managerService.displayManagerMode();
+               modeInputHandling();
+            } else {
+               passwordNotMatchMessage();
+               modeInputHandling();
+            }
          }
          default -> {
             errorMessage();
             modeInputHandling();
          }
       }
+   }
+
+   public boolean passwordCheck() {
+      System.out.print("관리자 비밀번호를 입력해주세요: ");
+      try {
+         return encryption(String.valueOf(sc.nextInt())).equals(hotelService.getHotelPassword());
+      } catch (Exception e) {
+         return false;
+      }
+   }
+
+   public void passwordNotMatchMessage() {
+      System.out.println("비밀번호가 일치하지 않습니다.");
+      System.out.println("시스템이 돌아갑니다.");
+   }
+
+   private String encryption(String password) throws NoSuchAlgorithmException {
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(password.getBytes());
+
+      return bytesToHex(md.digest());
+   }
+
+   private String bytesToHex(byte[] bytes) {
+      StringBuilder sb = new StringBuilder();
+      for (byte b : bytes) {
+         sb.append(String.format("%02x", b));
+      }
+      return sb.toString();
    }
 }

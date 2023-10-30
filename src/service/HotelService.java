@@ -32,6 +32,10 @@ public class HotelService {
       }
    }
 
+   public String getHotelPassword() {
+      return hotel.getPassword();
+   }
+
    public List<LocalDate> findAvailableDays() {
       return hotel.getProductRooms().stream()
               .map(ProductRoom::getReservedDate)

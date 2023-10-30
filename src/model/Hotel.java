@@ -29,6 +29,10 @@ public class Hotel {
       return asset;
    }
 
+   public String getPassword() {
+      return password;
+   }
+
    public void setAsset(int asset) {
       this.asset = asset;
    }
